@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>China-TM Cargo — Доставка из Китая в Туркменистан</title>
+  <style>
+    :root {
+      --red: #e63946;
+      --dark: #0d1117;
+      --dark2: #161b22;
+      --dark3: #21262d;
+      --accent: #f4a261;
+      --gold: #f4d35e;
+      --green: #2ecc71;
+      --blue: #4cc9f0;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --border: #30363d;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(13,17,23,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 800; font-size: 1.2rem; color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo .flag { font-size: 1.4rem; }
+    .nav-logo .dot { color: var(--red); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--red); color: #fff; border: none;
+      padding: 0.5rem 1.2rem; border-radius: 8px; font-weight: 600;
+      cursor: pointer; font-size: 0.9rem; transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: center; text-align: center;
+      padding: 100px 2rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(230,57,70,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(230,57,70,0.15); border: 1px solid rgba(230,57,70,0.3);
+      color: var(--accent); padding: 0.3rem 1rem; border-radius: 999px;
+      font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 900; line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--red), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      color: var(--muted); font-size: 1.15rem;
+      max-width: 600px; margin: 0 auto 2.5rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--red); color: #fff; border: none;
+      padding: 0.9rem 2rem; border-radius: 10px; font-weight: 700;
+      font-size: 1rem; cursor: pointer; transition: transform 0.2s, opacity 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.9rem 2rem; border-radius: 10px; font-weight: 600;
+      font-size: 1rem; cursor: pointer; transition: border-color 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--muted); }
+
+    .hero-stats {
+      display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 4rem; padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat { text-align: center; }
+    .stat .num { font-size: 2rem; font-weight: 800; color: var(--text); }
+    .stat .num span { color: var(--red); }
+    .stat .label { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    /* ROUTE BAR */
+    .route-bar {
+      background: var(--dark2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      overflow: hidden;
+    }
+    .route-track {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; flex-wrap: nowrap;
+    }
+    .route-city {
+      text-align: center; min-width: 120px;
+    }
+    .route-city .city-flag { font-size: 1.5rem; }
+    .route-city .city-name { font-size: 0.75rem; font-weight: 700; color: var(--text); }
+    .route-city .city-label { font-size: 0.65rem; color: var(--muted); }
+    .route-arrow {
+      flex: 1; min-width: 60px; display: flex; align-items: center;
+      position: relative; margin: 0 4px;
+    }
+    .route-arrow::before {
+      content: '';
+      display: block; width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--red), var(--accent));
+      border-radius: 2px;
+    }
+    .route-arrow .arr-icon {
+      position: absolute; right: -6px;
+      color: var(--accent); font-size: 0.9rem;
+    }
+    .route-arrow .arr-label {
+      position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+      font-size: 0.6rem; color: var(--muted); white-space: nowrap;
+    }
+
+    /* SECTION */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--red); text-transform: uppercase; letter-spacing: 2px;
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      font-weight: 800; margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: var(--muted); max-width: 560px; margin-bottom: 3rem;
+    }
+
+    /* HOW IT WORKS */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .how-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .how-card:hover { border-color: var(--red); transform: translateY(-4px); }
+    .how-step {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--red), var(--accent));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .how-icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
+    .how-card h3 { font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem; }
+    .how-card p { color: var(--muted); font-size: 0.88rem; }
+
+    /* TRACKING DEMO */
+    #tracking { background: var(--dark2); }
+    .tracking-demo {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2rem; align-items: start;
+    }
+    @media(max-width: 768px) { .tracking-demo { grid-template-columns: 1fr; } }
+    .track-input-box {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .track-input-box h3 { font-weight: 700; margin-bottom: 1rem; }
+    .track-field {
+      display: flex; gap: 0.5rem; margin-bottom: 1rem;
+    }
+    .track-field input {
+      flex: 1;
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+    .track-field input:focus { outline: none; border-color: var(--red); }
+    .track-field button {
+      background: var(--red); color: #fff; border: none;
+      padding: 0.7rem 1.2rem; border-radius: 8px;
+      font-weight: 700; cursor: pointer;
+    }
+    .track-timeline { list-style: none; }
+    .track-item {
+      display: flex; gap: 1rem; padding: 0.8rem 0;
+      border-left: 2px solid var(--border);
+      margin-left: 12px; padding-left: 1.2rem;
+      position: relative;
+    }
+    .track-item::before {
+      content: '';
+      position: absolute; left: -7px; top: 14px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--border);
+      border: 2px solid var(--dark2);
+    }
+    .track-item.done::before { background: var(--green); border-color: var(--green); }
+    .track-item.active::before {
+      background: var(--red);
+      box-shadow: 0 0 0 4px rgba(230,57,70,0.2);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 4px rgba(230,57,70,0.2); }
+      50% { box-shadow: 0 0 0 8px rgba(230,57,70,0.05); }
+    }
+    .track-item .t-label { font-size: 0.85rem; font-weight: 600; }
+    .track-item .t-sub { font-size: 0.75rem; color: var(--muted); }
+    .track-item .t-time { font-size: 0.7rem; color: var(--muted); margin-left: auto; }
+    .track-item.done .t-label { color: var(--green); }
+    .track-item.active .t-label { color: var(--accent); }
+
+    /* PHONE MOCKUP */
+    .phone-panel {
+      display: flex; flex-direction: column; gap: 1rem; align-items: center;
+    }
+    .phone-mock {
+      width: 260px;
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    }
+    .phone-header {
+      background: var(--red);
+      padding: 1rem 1.2rem 0.8rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .phone-header .ph-title { font-weight: 700; font-size: 0.9rem; }
+    .phone-header .ph-sub { font-size: 0.7rem; opacity: 0.8; }
+    .phone-body { padding: 1rem; }
+    .order-card-mini {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.8rem;
+      margin-bottom: 0.7rem;
+    }
+    .order-card-mini .ocm-top {
+      display: flex; justify-content: space-between;
+      margin-bottom: 0.4rem;
+    }
+    .ocm-title { font-size: 0.78rem; font-weight: 700; }
+    .ocm-price { font-size: 0.78rem; color: var(--gold); font-weight: 700; }
+    .ocm-status {
+      font-size: 0.65rem; padding: 2px 8px;
+      border-radius: 999px; display: inline-block;
+    }
+    .ocm-status.transit { background: rgba(76,201,240,0.15); color: var(--blue); }
+    .ocm-status.delivered { background: rgba(46,204,113,0.15); color: var(--green); }
+    .ocm-status.processing { background: rgba(244,162,97,0.15); color: var(--accent); }
+    .ocm-bar {
+      display: flex; gap: 2px; margin-top: 0.6rem;
+    }
+    .ocm-seg {
+      height: 3px; border-radius: 2px; flex: 1;
+      background: var(--border);
+    }
+    .ocm-seg.fill { background: linear-gradient(90deg, var(--red), var(--accent)); }
+    .wallet-card {
+      background: linear-gradient(135deg, rgba(230,57,70,0.3), rgba(244,162,97,0.2));
+      border: 1px solid rgba(230,57,70,0.3);
+      border-radius: 10px; padding: 0.8rem;
+    }
+    .wallet-card .wc-label { font-size: 0.65rem; color: var(--muted); }
+    .wallet-card .wc-amount { font-size: 1.3rem; font-weight: 800; color: var(--gold); }
+
+    /* FEATURES */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover { border-color: var(--red); transform: translateY(-3px); }
+    .feature-icon {
+      width: 48px; height: 48px;
+      background: rgba(230,57,70,0.1);
+      border: 1px solid rgba(230,57,70,0.2);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 1rem;
+    }
+    .feature-card h3 { font-weight: 700; margin-bottom: 0.5rem; }
+    .feature-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+    .feature-list {
+      list-style: none; margin-top: 1rem;
+    }
+    .feature-list li {
+      display: flex; align-items: flex-start; gap: 0.5rem;
+      font-size: 0.82rem; color: var(--muted);
+      padding: 0.25rem 0;
+    }
+    .feature-list li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+    /* ROUTES */
+    #routes { background: var(--dark2); }
+    .routes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .route-card {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      transition: border-color 0.2s;
+    }
+    .route-card:hover { border-color: var(--accent); }
+    .route-type {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 1rem;
+      padding: 4px 12px; border-radius: 999px;
+    }
+    .route-type.main { background: rgba(46,204,113,0.1); color: var(--green); border: 1px solid rgba(46,204,113,0.2); }
+    .route-type.express { background: rgba(76,201,240,0.1); color: var(--blue); border: 1px solid rgba(76,201,240,0.2); }
+    .route-type.alt { background: rgba(244,162,97,0.1); color: var(--accent); border: 1px solid rgba(244,162,97,0.2); }
+    .route-card h3 { font-weight: 700; font-size: 1rem; margin-bottom: 0.8rem; }
+    .route-details { display: flex; flex-direction: column; gap: 0.5rem; }
+    .route-detail {
+      display: flex; gap: 0.5rem; align-items: flex-start;
+      font-size: 0.85rem;
+    }
+    .route-detail .rd-icon { font-size: 0.9rem; flex-shrink: 0; margin-top: 1px; }
+    .route-detail .rd-text { color: var(--muted); }
+    .route-detail .rd-val { color: var(--text); font-weight: 600; }
+
+    /* TARIFFS */
+    .tariffs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .tariffs-table th {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      padding: 0.8rem 1rem;
+      text-align: left;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+    }
+    .tariffs-table td {
+      border: 1px solid var(--border);
+      padding: 0.85rem 1rem;
+      color: var(--text);
+    }
+    .tariffs-table tr:hover td { background: var(--dark3); }
+    .tariffs-table td.highlight { color: var(--gold); font-weight: 700; }
+
+    /* TECH */
+    #tech { background: var(--dark2); }
+    .tech-arch {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem; margin-bottom: 2rem;
+    }
+    .tech-block {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+    }
+    .tech-block .tb-header {
+      display: flex; align-items: center; gap: 0.5rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.8rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .tech-block .tb-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+    }
+    .tech-block .tb-item {
+      display: flex; justify-content: space-between;
+      font-size: 0.78rem; padding: 0.2rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .tech-block .tb-item .ti-label { color: var(--muted); }
+    .tech-block .tb-item .ti-val { color: var(--text); font-weight: 600; font-size: 0.72rem; }
+
+    /* ROADMAP */
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .roadmap-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      position: relative;
+    }
+    .roadmap-card .rm-phase {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--red); margin-bottom: 0.3rem;
+    }
+    .roadmap-card h3 { font-weight: 700; margin-bottom: 0.3rem; }
+    .roadmap-card .rm-duration {
+      font-size: 0.8rem; color: var(--accent); font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .roadmap-tasks { list-style: none; }
+    .roadmap-tasks li {
+      font-size: 0.8rem; color: var(--muted); padding: 0.2rem 0;
+      display: flex; align-items: flex-start; gap: 0.5rem;
+    }
+    .roadmap-tasks li::before { content: '→'; color: var(--muted); flex-shrink: 0; }
+
+    /* GPS */
+    .gps-section {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2rem; align-items: center;
+    }
+    @media(max-width: 768px) { .gps-section { grid-template-columns: 1fr; } }
+    .gps-map-fake {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      height: 320px;
+      position: relative;
+      overflow: hidden;
+    }
+    .gps-map-fake::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(rgba(30,40,60,0.8) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30,40,60,0.8) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .gps-route-line {
+      position: absolute;
+      top: 50%; left: 10%;
+      width: 80%; height: 2px;
+      background: linear-gradient(90deg, var(--green), var(--accent), var(--red));
+      border-radius: 2px;
+      transform: translateY(-50%) rotate(-5deg);
+    }
+    .gps-dot {
+      position: absolute;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--red);
+      border: 2px solid var(--dark3);
+      box-shadow: 0 0 0 6px rgba(230,57,70,0.3);
+      animation: gpsPulse 2s infinite;
+    }
+    @keyframes gpsPulse {
+      0%,100% { box-shadow: 0 0 0 6px rgba(230,57,70,0.3); }
+      50% { box-shadow: 0 0 0 12px rgba(230,57,70,0.05); }
+    }
+    .gps-label {
+      position: absolute;
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.7rem; font-weight: 700;
+      white-space: nowrap;
+    }
+    .gps-label::after {
+      content: '';
+      position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--border);
+    }
+
+    /* TEAM */
+    #team { background: var(--dark2); }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .team-card {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .team-role { font-size: 0.82rem; font-weight: 700; }
+    .team-count {
+      background: rgba(230,57,70,0.1);
+      border: 1px solid rgba(230,57,70,0.2);
+      color: var(--red); font-weight: 800; font-size: 0.9rem;
+      padding: 4px 10px; border-radius: 6px;
+    }
+    .team-salary { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(230,57,70,0.15), rgba(244,162,97,0.08));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 6rem 2rem;
+    }
+    .cta-section h2 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900; margin-bottom: 1rem;
+    }
+    .cta-section p { color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem; }
+    .app-badges {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+    .app-badge {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.7rem 1.5rem;
+      display: flex; align-items: center; gap: 0.7rem;
+      cursor: pointer; transition: border-color 0.2s;
+      text-decoration: none; color: var(--text);
+    }
+    .app-badge:hover { border-color: var(--muted); }
+    .app-badge .ab-icon { font-size: 1.5rem; }
+    .app-badge .ab-text { text-align: left; }
+    .app-badge .ab-sub { font-size: 0.65rem; color: var(--muted); }
+    .app-badge .ab-name { font-size: 0.9rem; font-weight: 700; }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark2);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem 2rem;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+    @media(max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+    .footer-brand { }
+    .footer-brand .fb-logo {
+      font-weight: 800; font-size: 1.1rem; margin-bottom: 0.5rem;
+    }
+    .footer-brand p { font-size: 0.8rem; color: var(--muted); max-width: 220px; }
+    .footer-col h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { font-size: 0.82rem; color: var(--muted); padding: 0.2rem 0; cursor: pointer; }
+    .footer-col ul li:hover { color: var(--text); }
+    .footer-bottom {
+      max-width: 1100px; margin: 2rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.78rem; color: var(--muted);
+    }
+
+    /* SCROLL FX */
+    .fade-up {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media(max-width: 640px) {
+      .nav-links { display: none; }
+      .hero-stats { gap: 2rem; }
+      .route-track { overflow-x: auto; justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="flag">🇨🇳</span>
+    China<span class="dot">-TM</span> Cargo
+    <span class="flag">🇹🇲</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">Как это работает</a></li>
+    <li><a href="#features">Функционал</a></li>
+    <li><a href="#routes">Маршруты</a></li>
+    <li><a href="#tariffs">Тарифы</a></li>
+    <li><a href="#tech">Технологии</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+  </ul>
+  <button class="nav-cta" onclick="scrollToSection('tracking')">Отследить заказ</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span>🚚</span>
+    Логистическая экосистема · Версия 1.0
+  </div>
+  <h1>Доставка из Китая<br/><span class="highlight">в Туркменистан</span></h1>
+  <p>Выкуп товаров с Taobao, 1688 и Dewu/Poizon — быстро, надёжно, с реальным GPS-трекингом каждого груза.</p>
+  <div class="hero-btns">
+    <a href="#how" class="btn-primary">Узнать как работает</a>
+    <a href="#tracking" class="btn-outline">Отследить посылку</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="num">14<span>–20</span></div>
+      <div class="label">дней авто-доставка</div>
+    </div>
+    <div class="stat">
+      <div class="num">2<span>–5</span></div>
+      <div class="label">дней авиа-экспресс</div>
+    </div>
+    <div class="stat">
+      <div class="num"><span>~</span>5000</div>
+      <div class="label">км маршрут</div>
+    </div>
+    <div class="stat">
+      <div class="num">3</div>
+      <div class="label">маркетплейса Китая</div>
+    </div>
+    <div class="stat">
+      <div class="num">99<span>.5%</span></div>
+      <div class="label">uptime платформы</div>
+    </div>
+  </div>
+</section>
+
+<!-- ROUTE BAR -->
+<div class="route-bar">
+  <div class="route-track container">
+    <div class="route-city">
+      <div class="city-flag">🇨🇳</div>
+      <div class="city-name">Гуанчжоу</div>
+      <div class="city-label">Склад / Выкуп</div>
+    </div>
+    <div class="route-arrow">
+      <span class="arr-label">авто ~2 дня</span>
+      <span class="arr-icon">›</span>
+    </div>
+    <div class="route-city">
+      <div class="city-flag">🏙</div>
+      <div class="city-name">Урумчи</div>
+      <div class="city-label">Транзит</div>
+    </div>
+    <div class="route-arrow">
+      <span class="arr-label">КПП Хоргос</span>
+      <span class="arr-icon">›</span>
+    </div>
+    <div class="route-city">
+      <div class="city-flag">🇰🇿</div>
+      <div class="city-name">Казахстан</div>
+      <div class="city-label">Транзит</div>
+    </div>
+    <div class="route-arrow">
+      <span class="arr-label">→ Узбекистан</span>
+      <span class="arr-icon">›</span>
+    </div>
+    <div class="route-city">
+      <div class="city-flag">🇹🇲</div>
+      <div class="city-name">Ашхабад</div>
+      <div class="city-label">Доставка</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="section-label">Процесс</div>
+    <h2 class="section-title">Как это работает</h2>
+    <p class="section-sub">От поиска товара на Taobao до доставки к вашей двери в Ашхабаде — 4 простых шага.</p>
+    <div class="how-grid">
+      <div class="how-card fade-up">
+        <div class="how-step">1</div>
+        <div class="how-icon">🔗</div>
+        <h3>Вставьте ссылку</h3>
+        <p>Скопируйте ссылку товара с Taobao, 1688 или Dewu — система автоматически парсит название, фото и цену.</p>
+      </div>
+      <div class="how-card fade-up">
+        <div class="how-step">2</div>
+        <div class="how-icon">💳</div>
+        <h3>Оплатите в манатах</h3>
+        <p>Видите итоговую сумму в TMT: цена товара + комиссия + доставка по Китаю. Оплата списывается с кошелька.</p>
+      </div>
+      <div class="how-card fade-up">
+        <div class="how-step">3</div>
+        <div class="how-icon">📦</div>
+        <h3>Выкуп и контроль</h3>
+        <p>Наш склад в Гуанчжоу принимает товар, фотографирует, взвешивает и отправляет вам уведомление с фото.</p>
+      </div>
+      <div class="how-card fade-up">
+        <div class="how-step">4</div>
+        <div class="how-icon">🏠</div>
+        <h3>Доставка на дом</h3>
+        <p>GPS-трекинг на всём маршруте. Курьер доставит заказ по вашему адресу в Ашхабаде с подтверждением.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACKING -->
+<section id="tracking">
+  <div class="container">
+    <div class="section-label">Live-трекинг</div>
+    <h2 class="section-title">Отследите ваш заказ</h2>
+    <p class="section-sub">Актуальный статус каждого этапа: от выкупа до доставки на дом. GPS-трекер на грузовике.</p>
+    <div class="tracking-demo">
+      <div>
+        <div class="track-input-box" style="margin-bottom:1rem">
+          <h3>Введите номер заказа</h3>
+          <div class="track-field">
+            <input type="text" id="trackInput" placeholder="CTM-2026-00847" value="CTM-2026-00847"/>
+            <button onclick="runTrackDemo()">Найти</button>
+          </div>
+          <div style="font-size:0.8rem;color:var(--muted)">
+            Попробуйте демо: <code style="color:var(--accent)">CTM-2026-00847</code>
+          </div>
+        </div>
+        <div style="background:var(--dark3);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:1rem;align-items:center;">
+            <div>
+              <div style="font-weight:700;font-size:0.95rem">Nike Air Max · 42 размер</div>
+              <div style="font-size:0.75rem;color:var(--muted)">CTM-2026-00847 · 1688.com</div>
+            </div>
+            <div style="text-align:right">
+              <div style="color:var(--gold);font-weight:800;font-size:1rem">847 TMT</div>
+              <div style="font-size:0.7rem;color:var(--muted)">~234 CNY</div>
+            </div>
+          </div>
+          <ul class="track-timeline" id="trackTimeline">
+            <li class="track-item done">
+              <div style="flex:1">
+                <div class="t-label">✓ Заказ создан</div>
+                <div class="t-sub">Клиент оформил заявку</div>
+              </div>
+              <div class="t-time">12 Mar · 14:22</div>
+            </li>
+            <li class="track-item done">
+              <div style="flex:1">
+                <div class="t-label">✓ Оплачено в Китае</div>
+                <div class="t-sub">Выкуп через Alipay Business</div>
+              </div>
+              <div class="t-time">12 Mar · 14:45</div>
+            </li>
+            <li class="track-item done">
+              <div style="flex:1">
+                <div class="t-label">✓ Принято на складе КНР</div>
+                <div class="t-sub">Фото и взвешивание · 0.82 кг</div>
+              </div>
+              <div class="t-time">15 Mar · 09:11</div>
+            </li>
+            <li class="track-item done">
+              <div style="flex:1">
+                <div class="t-label">✓ В обработке</div>
+                <div class="t-sub">Переупаковка, формирование мешка</div>
+              </div>
+              <div class="t-time">16 Mar · 11:30</div>
+            </li>
+            <li class="track-item active">
+              <div style="flex:1">
+                <div class="t-label">⬤ В пути (магистраль)</div>
+                <div class="t-sub">GPS: Урумчи → Хоргос · ETA ~19 Mar</div>
+              </div>
+              <div class="t-time">Сейчас</div>
+            </li>
+            <li class="track-item">
+              <div style="flex:1">
+                <div class="t-label">На таможне</div>
+                <div class="t-sub">Таможенное оформление</div>
+              </div>
+              <div class="t-time">—</div>
+            </li>
+            <li class="track-item">
+              <div style="flex:1">
+                <div class="t-label">Прибыл в Ашхабад</div>
+                <div class="t-sub">Склад в Туркменистане</div>
+              </div>
+              <div class="t-time">—</div>
+            </li>
+            <li class="track-item">
+              <div style="flex:1">
+                <div class="t-label">Доставлено</div>
+                <div class="t-sub">Подпись клиента</div>
+              </div>
+              <div class="t-time">—</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phone-panel">
+        <div class="phone-mock">
+          <div class="phone-header">
+            <div>
+              <div class="ph-title">China-TM Cargo</div>
+              <div class="ph-sub">Мои заказы · 3 активных</div>
+            </div>
+          </div>
+          <div class="phone-body">
+            <div style="font-size:0.65rem;color:var(--muted);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:1px;">Активные заказы</div>
+            <div class="order-card-mini">
+              <div class="ocm-top">
+                <span class="ocm-title">Nike Air Max 42</span>
+                <span class="ocm-price">847 тмт</span>
+              </div>
+              <span class="ocm-status transit">В пути</span>
+              <div class="ocm-bar">
+                <div class="ocm-seg fill"></div>
+                <div class="ocm-seg fill"></div>
+                <div class="ocm-seg fill"></div>
+                <div class="ocm-seg fill"></div>
+                <div class="ocm-seg"></div>
+                <div class="ocm-seg"></div>
+                <div class="ocm-seg"></div>
+              </div>
+            </div>
+            <div class="order-card-mini">
+              <div class="ocm-top">
+                <span class="ocm-title">Куртка Uniqlo XL</span>
+                <span class="ocm-price">1240 тмт</span>
+              </div>
+              <span class="ocm-status processing">Обработка</span>
+              <div class="ocm-bar">
+                <div class="ocm-seg fill"></div>
+                <div class="ocm-seg fill"></div>
+                <div class="ocm-seg fill"></div>
+                <div class="ocm-seg"></div>
+                <div class="ocm-seg"></div>
+                <div class="ocm-seg"></div>
+                <div class="ocm-seg"></div>
+              </div>
+            </div>
+            <div class="order-card-mini">
+              <div class="ocm-top">
+                <span class="ocm-title">iPhone чехол</span>
+                <span class="ocm-price">85 тмт</span>
+              </div>
+              <span class="ocm-status delivered">Доставлено</span>
+              <div class="ocm-bar">
+                <div class="ocm-seg fill"></div>
+                <div class="ocm-seg fill"></div>
+                <div class="ocm-seg fill"></div>
+                <div class="ocm-seg fill"></div>
+                <div class="ocm-seg fill"></div>
+                <div class="ocm-seg fill"></div>
+                <div class="ocm-seg fill"></div>
+              </div>
+            </div>
+            <div style="margin-top:0.8rem;">
+              <div style="font-size:0.65rem;color:var(--muted);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:1px;">Кошелёк</div>
+              <div class="wallet-card">
+                <div class="wc-label">Баланс</div>
+                <div class="wc-amount">3 250 TMT</div>
+                <div style="font-size:0.65rem;color:var(--muted);margin-top:2px;">≈ 900 CNY по курсу 3.61</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center;font-size:0.75rem;color:var(--muted)">
+          Клиентское мобильное приложение<br/>iOS + Android (React Native)
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="section-label">Платформа</div>
+    <h2 class="section-title">Полная экосистема</h2>
+    <p class="section-sub">4 приложения в единой инфраструктуре — клиент, склад, курьер и администратор.</p>
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon">📱</div>
+        <h3>Клиентское приложение</h3>
+        <p>iOS + Android (React Native). Интерфейс на русском, туркменском и английском.</p>
+        <ul class="feature-list">
+          <li>Выкуп с Taobao / 1688 / Dewu по ссылке</li>
+          <li>Авто-парсинг товара через ElimAPI</li>
+          <li>Кошелёк в манатах (TMT)</li>
+          <li>GPS-трекинг на карте в реальном времени</li>
+          <li>Push + SMS уведомления</li>
+          <li>Страхование товара при заказе</li>
+        </ul>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🏭</div>
+        <h3>Складское ПО (WMS)</h3>
+        <p>Для операторов склада в Китае и Туркменистане. Android планшет + Web.</p>
+        <ul class="feature-list">
+          <li>Сканирование трек-номеров и QR-кодов</li>
+          <li>Фотофиксация при приёмке (мин. 2 фото)</li>
+          <li>Взвешивание и объёмный вес</li>
+          <li>Консолидация в мешки (Master-ID)</li>
+          <li>Привязка GPS-трекера к рейсу</li>
+          <li>Офлайн-режим с синхронизацией</li>
+        </ul>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">📊</div>
+        <h3>Административная панель</h3>
+        <p>Полный контроль над платформой. React Web, ролевой доступ (RBAC).</p>
+        <ul class="feature-list">
+          <li>Дашборд: заказы, выручка, рейсы в реальном времени</li>
+          <li>Управление курсом TMT/CNY ежедневно</li>
+          <li>Карта активных GPS-трекеров</li>
+          <li>Управление сотрудниками и ролями</li>
+          <li>Финансовые отчёты (Excel / PDF)</li>
+          <li>2FA для администраторов</li>
+        </ul>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🛵</div>
+        <h3>Приложение курьера</h3>
+        <p>Для курьеров в Ашхабаде. iOS + Android (React Native).</p>
+        <ul class="feature-list">
+          <li>Список доставок на сегодня с адресами</li>
+          <li>Навигация через Yandex Maps / Google Maps</li>
+          <li>Смена статуса: принял / в пути / доставлено</li>
+          <li>Фото у двери + электронная подпись клиента</li>
+          <li>История и статистика доставок</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GPS -->
+<section id="gps" style="background:var(--dark2);">
+  <div class="container">
+    <div class="gps-section">
+      <div>
+        <div class="section-label">GPS-мониторинг</div>
+        <h2 class="section-title">Eelink GPT50 на каждом рейсе</h2>
+        <p style="color:var(--muted);margin-bottom:1.5rem;">Промышленный GPS-трекер отслеживает груз в реальном времени на всём маршруте Китай → Туркменистан.</p>
+        <div style="display:flex;flex-direction:column;gap:0.8rem;">
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:1rem;display:flex;gap:1rem;align-items:flex-start;">
+            <span style="font-size:1.2rem;">📡</span>
+            <div>
+              <div style="font-weight:700;font-size:0.9rem;">GPS + GLONASS + BeiDou + Galileo</div>
+              <div style="font-size:0.8rem;color:var(--muted);">Работает в Китае (BeiDou) и СНГ (GLONASS). 4G LTE + 2G GSM резерв.</div>
+            </div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:1rem;display:flex;gap:1rem;align-items:flex-start;">
+            <span style="font-size:1.2rem;">🔋</span>
+            <div>
+              <div style="font-weight:700;font-size:0.9rem;">До 5–8 лет работы от батареи</div>
+              <div style="font-size:0.8rem;color:var(--muted);">При режиме 1 пинг/сутки. Магнитное крепление — скрытая установка.</div>
+            </div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:1rem;display:flex;gap:1rem;align-items:flex-start;">
+            <span style="font-size:1.2rem;">🚨</span>
+            <div>
+              <div style="font-weight:700;font-size:0.9rem;">Датчик вскрытия + геозоны</div>
+              <div style="font-size:0.8rem;color:var(--muted);">Мгновенное уведомление при несанкционированном доступе или отклонении от маршрута.</div>
+            </div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:1rem;display:flex;gap:1rem;align-items:flex-start;">
+            <span style="font-size:1.2rem;">🌊</span>
+            <div>
+              <div style="font-weight:700;font-size:0.9rem;">IPX7 · –20°C до +65°C</div>
+              <div style="font-size:0.8rem;color:var(--muted);">Выдерживает условия трассы Урумчи → Ашхабад. WebSocket → Live карта клиента.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="gps-map-fake">
+          <div class="gps-route-line"></div>
+          <!-- City labels -->
+          <div class="gps-label" style="left:8%;top:30%;">🇨🇳 Гуанчжоу</div>
+          <div class="gps-label" style="left:28%;top:42%;">Урумчи</div>
+          <div class="gps-dot" style="left:52%;top:48%;"></div>
+          <div class="gps-label" style="left:48%;top:28%;">📍 Сейчас<br/><span style="font-size:0.65rem;color:var(--green)">Хоргос КПП</span></div>
+          <div class="gps-label" style="left:68%;top:42%;">🇰🇿 Казахстан</div>
+          <div class="gps-label" style="left:82%;top:32%;">🇹🇲 Ашхабад</div>
+          <div style="position:absolute;bottom:1rem;left:1rem;right:1rem;display:flex;gap:0.5rem;align-items:center;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--red);"></div>
+            <span style="font-size:0.7rem;color:var(--muted);">GPS · Обновление каждые 5 мин · ETA: 19 марта</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROUTES -->
+<section id="routes">
+  <div class="container">
+    <div class="section-label">Маршруты</div>
+    <h2 class="section-title">3 способа доставки</h2>
+    <p class="section-sub">Выбирайте между скоростью и ценой — от бюджетной авто-доставки до авиа-экспресса.</p>
+    <div class="routes-grid">
+      <div class="route-card fade-up">
+        <div class="route-type main">🚛 Основной</div>
+        <h3>Автодоставка</h3>
+        <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Гуанчжоу → Урумчи → Хоргос → Казахстан → Узбекистан → Ашхабад</p>
+        <div class="route-details">
+          <div class="route-detail">
+            <span class="rd-icon">⏱</span>
+            <span class="rd-text">Срок:&nbsp;</span>
+            <span class="rd-val">14–20 дней</span>
+          </div>
+          <div class="route-detail">
+            <span class="rd-icon">📏</span>
+            <span class="rd-text">Расстояние:&nbsp;</span>
+            <span class="rd-val">5 000–7 000 км</span>
+          </div>
+          <div class="route-detail">
+            <span class="rd-icon">📦</span>
+            <span class="rd-text">Тип груза:&nbsp;</span>
+            <span class="rd-val">LTL/FTL контейнеры</span>
+          </div>
+          <div class="route-detail">
+            <span class="rd-icon">🏁</span>
+            <span class="rd-text">Граница:&nbsp;</span>
+            <span class="rd-val">Порт Хоргос (24/7)</span>
+          </div>
+          <div class="route-detail">
+            <span class="rd-icon">💰</span>
+            <span class="rd-text">Стоимость:&nbsp;</span>
+            <span class="rd-val">Базовый тариф</span>
+          </div>
+        </div>
+      </div>
+      <div class="route-card fade-up">
+        <div class="route-type express">✈️ Экспресс</div>
+        <h3>Авиадоставка</h3>
+        <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Гуанчжоу / Пекин → Прямой рейс → Ашхабад</p>
+        <div class="route-details">
+          <div class="route-detail">
+            <span class="rd-icon">⏱</span>
+            <span class="rd-text">Срок:&nbsp;</span>
+            <span class="rd-val">2–5 дней</span>
+          </div>
+          <div class="route-detail">
+            <span class="rd-icon">📦</span>
+            <span class="rd-text">Тип груза:&nbsp;</span>
+            <span class="rd-val">Мелкие, высокоценные</span>
+          </div>
+          <div class="route-detail">
+            <span class="rd-icon">🎯</span>
+            <span class="rd-text">Применение:&nbsp;</span>
+            <span class="rd-val">Электроника, люкс</span>
+          </div>
+          <div class="route-detail">
+            <span class="rd-icon">💰</span>
+            <span class="rd-text">Стоимость:&nbsp;</span>
+            <span class="rd-val">+ наценка к базе</span>
+          </div>
+        </div>
+      </div>
+      <div class="route-card fade-up">
+        <div class="route-type alt">🚂 Альтернатива</div>
+        <h3>Железнодорожная</h3>
+        <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Урумчи → Хоргос → Казахстан → Туркменистан</p>
+        <div class="route-details">
+          <div class="route-detail">
+            <span class="rd-icon">⏱</span>
+            <span class="rd-text">Срок:&nbsp;</span>
+            <span class="rd-val">15–20 дней</span>
+          </div>
+          <div class="route-detail">
+            <span class="rd-icon">📦</span>
+            <span class="rd-text">Тип груза:&nbsp;</span>
+            <span class="rd-val">Крупные партии</span>
+          </div>
+          <div class="route-detail">
+            <span class="rd-icon">🔮</span>
+            <span class="rd-text">Статус:&nbsp;</span>
+            <span class="rd-val">При масштабировании</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TARIFFS -->
+<section id="tariffs">
+  <div class="container">
+    <div class="section-label">Финансовая модель</div>
+    <h2 class="section-title">Структура тарифов</h2>
+    <p class="section-sub">Прозрачное ценообразование. Клиент видит итоговую сумму в манатах на всех этапах.</p>
+    <div style="overflow-x:auto;margin-bottom:2rem;">
+      <table class="tariffs-table">
+        <thead>
+          <tr>
+            <th>Статья дохода</th>
+            <th>Размер</th>
+            <th>Описание</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Комиссия за выкуп</td>
+            <td class="highlight">5–10%</td>
+            <td>От стоимости товара. Посреднические услуги на Taobao / 1688</td>
+          </tr>
+          <tr>
+            <td>Стоимость доставки</td>
+            <td class="highlight">По тарифной сетке</td>
+            <td>Вес × ставка (реальный или объёмный вес — берётся больший)</td>
+          </tr>
+          <tr>
+            <td>Страхование</td>
+            <td class="highlight">2–5%</td>
+            <td>Опционально. Утрата, повреждение при транспортировке</td>
+          </tr>
+          <tr>
+            <td>Авиа-экспресс наценка</td>
+            <td class="highlight">+X%</td>
+            <td>Дополнительная наценка при выборе авиамаршрута</td>
+          </tr>
+          <tr>
+            <td>Упаковка</td>
+            <td class="highlight">Фиксировано</td>
+            <td>Дополнительная упаковка хрупких и ценных товаров</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;">
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;">
+        <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:1px;">Оплата в Туркменистане</div>
+        <div style="font-weight:700;margin-bottom:0.5rem;">Способы пополнения кошелька</div>
+        <div style="display:flex;flex-direction:column;gap:0.3rem;">
+          <div style="font-size:0.82rem;color:var(--muted);">💵 Наличные TMT в офисе</div>
+          <div style="font-size:0.82rem;color:var(--muted);">💳 Карта Altyn Asyr (POS-терминал)</div>
+          <div style="font-size:0.82rem;color:var(--muted);">🏧 Терминалы Altyn Asyr</div>
+        </div>
+      </div>
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;">
+        <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:1px;">Оплата в Китае</div>
+        <div style="font-weight:700;margin-bottom:0.5rem;">Корпоративные платежи</div>
+        <div style="display:flex;flex-direction:column;gap:0.3rem;">
+          <div style="font-size:0.82rem;color:var(--muted);">📲 Alipay Business (企业支付宝)</div>
+          <div style="font-size:0.82rem;color:var(--muted);">💬 WeChat Pay для бизнеса</div>
+          <div style="font-size:0.82rem;color:var(--muted);">🏦 Bank of China (корп. счёт)</div>
+        </div>
+      </div>
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;">
+        <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:1px;">Курс валют</div>
+        <div style="font-weight:700;margin-bottom:0.5rem;">Внутренний курс TMT/CNY</div>
+        <div style="display:flex;flex-direction:column;gap:0.3rem;">
+          <div style="font-size:0.82rem;color:var(--muted);">📅 Устанавливается ежедневно</div>
+          <div style="font-size:0.82rem;color:var(--muted);">⚙️ Через Admin Panel</div>
+          <div style="font-size:0.82rem;color:var(--muted);">👁 Клиент видит сумму в TMT</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section id="tech">
+  <div class="container">
+    <div class="section-label">Технологии</div>
+    <h2 class="section-title">Архитектура платформы</h2>
+    <p class="section-sub">Микросервисная архитектура с единым API Gateway. Высокая доступность 99.5% uptime.</p>
+    <div class="tech-arch">
+      <div class="tech-block">
+        <div class="tb-header">
+          <span class="tb-dot" style="background:var(--red);"></span>
+          Backend Core
+        </div>
+        <div class="tb-item"><span class="ti-label">Framework</span><span class="ti-val">Python + FastAPI</span></div>
+        <div class="tb-item"><span class="ti-label">Database</span><span class="ti-val">PostgreSQL + PostGIS</span></div>
+        <div class="tb-item"><span class="ti-label">Auth</span><span class="ti-val">JWT (15 мин) + Refresh</span></div>
+        <div class="tb-item"><span class="ti-label">Шифрование</span><span class="ti-val">TLS 1.3 + AES-256</span></div>
+        <div class="tb-item"><span class="ti-label">Доступность</span><span class="ti-val">99.5% uptime</span></div>
+      </div>
+      <div class="tech-block">
+        <div class="tb-header">
+          <span class="tb-dot" style="background:var(--blue);"></span>
+          Frontend & Mobile
+        </div>
+        <div class="tb-item"><span class="ti-label">Client App</span><span class="ti-val">React Native (iOS+And)</span></div>
+        <div class="tb-item"><span class="ti-label">WMS App</span><span class="ti-val">React Native Android</span></div>
+        <div class="tb-item"><span class="ti-label">Courier App</span><span class="ti-val">React Native (iOS+And)</span></div>
+        <div class="tb-item"><span class="ti-label">Admin Panel</span><span class="ti-val">React (Web)</span></div>
+        <div class="tb-item"><span class="ti-label">Min OS</span><span class="ti-val">iOS 15+ / Android 10+</span></div>
+      </div>
+      <div class="tech-block">
+        <div class="tb-header">
+          <span class="tb-dot" style="background:var(--green);"></span>
+          Интеграции
+        </div>
+        <div class="tb-item"><span class="ti-label">Маркетплейсы</span><span class="ti-val">ElimAPI (elim.asia)</span></div>
+        <div class="tb-item"><span class="ti-label">Уведомления</span><span class="ti-val">Firebase FCM + SMTP</span></div>
+        <div class="tb-item"><span class="ti-label">GPS протокол</span><span class="ti-val">TCP/UDP + WebSocket</span></div>
+        <div class="tb-item"><span class="ti-label">Навигация</span><span class="ti-val">Yandex Maps / Google</span></div>
+        <div class="tb-item"><span class="ti-label">Трекинг ЛМ</span><span class="ti-val">Cainiao / 17TRACK</span></div>
+      </div>
+      <div class="tech-block">
+        <div class="tb-header">
+          <span class="tb-dot" style="background:var(--gold);"></span>
+          Сервер (Production)
+        </div>
+        <div class="tb-item"><span class="ti-label">CPU</span><span class="ti-val">16–24 ядра</span></div>
+        <div class="tb-item"><span class="ti-label">RAM</span><span class="ti-val">64–128 ГБ</span></div>
+        <div class="tb-item"><span class="ti-label">Диски</span><span class="ti-val">2×1TB NVMe RAID-1</span></div>
+        <div class="tb-item"><span class="ti-label">Бэкапы</span><span class="ti-val">Ежедневно, 30 дней</span></div>
+        <div class="tb-item"><span class="ti-label">Доступ</span><span class="ti-val">RBAC (4 роли)</span></div>
+      </div>
+    </div>
+
+    <!-- Security -->
+    <div style="background:var(--dark3);border:1px solid rgba(46,204,113,0.2);border-radius:var(--radius);padding:1.5rem;display:flex;gap:2rem;flex-wrap:wrap;">
+      <div style="flex:1;min-width:200px;">
+        <div style="font-size:0.7rem;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem;">Безопасность</div>
+        <div style="display:flex;flex-direction:column;gap:0.4rem;">
+          <div style="font-size:0.82rem;color:var(--muted);">🔐 JWT + Refresh Token rotation</div>
+          <div style="font-size:0.82rem;color:var(--muted);">🛡 Rate limiting на авторизации</div>
+          <div style="font-size:0.82rem;color:var(--muted);">🔑 2FA для администраторов</div>
+        </div>
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <div style="font-size:0.7rem;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem;">Мониторинг</div>
+        <div style="display:flex;flex-direction:column;gap:0.4rem;">
+          <div style="font-size:0.82rem;color:var(--muted);">📋 Аудит-лог 12 месяцев</div>
+          <div style="font-size:0.82rem;color:var(--muted);">📹 Видео-зона приёмки 30 дней</div>
+          <div style="font-size:0.82rem;color:var(--muted);">📸 Фото при каждой приёмке</div>
+        </div>
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <div style="font-size:0.7rem;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem;">Языки интерфейса</div>
+        <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:0.3rem;">
+          <span style="background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.2);color:var(--green);padding:4px 10px;border-radius:6px;font-size:0.78rem;font-weight:700;">🇷🇺 Русский</span>
+          <span style="background:rgba(76,201,240,0.1);border:1px solid rgba(76,201,240,0.2);color:var(--blue);padding:4px 10px;border-radius:6px;font-size:0.78rem;font-weight:700;">🇹🇲 Туркменский</span>
+          <span style="background:rgba(244,211,94,0.1);border:1px solid rgba(244,211,94,0.2);color:var(--gold);padding:4px 10px;border-radius:6px;font-size:0.78rem;font-weight:700;">🇺🇸 English</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-label">Реализация</div>
+    <h2 class="section-title">Дорожная карта</h2>
+    <p class="section-sub">7 месяцев при параллельном выполнении этапов. Полный запуск — конец 2026 года.</p>
+    <div class="roadmap-grid">
+      <div class="roadmap-card fade-up" style="border-color:rgba(230,57,70,0.3);">
+        <div class="rm-phase">Этап 0</div>
+        <h3>Подготовка</h3>
+        <div class="rm-duration">1–2 недели</div>
+        <ul class="roadmap-tasks">
+          <li>Найм юридической фирмы в Гуанчжоу</li>
+          <li>Поиск склада в Гуанчжоу</li>
+          <li>Подбор юриста (торговая лицензия)</li>
+        </ul>
+      </div>
+      <div class="roadmap-card fade-up" style="border-color:rgba(244,162,97,0.3);">
+        <div class="rm-phase">Этап 1</div>
+        <h3>Юридика + Склад</h3>
+        <div class="rm-duration">2 месяца</div>
+        <ul class="roadmap-tasks">
+          <li>Регистрация WFOE</li>
+          <li>Аренда + оборудование склада</li>
+          <li>Alipay Business + WeChat Pay</li>
+          <li>GPS-трекеры Eelink GPT50</li>
+          <li>Договор с ElimAPI</li>
+        </ul>
+      </div>
+      <div class="roadmap-card fade-up" style="border-color:rgba(76,201,240,0.3);">
+        <div class="rm-phase">Этап 2</div>
+        <h3>Ядро системы</h3>
+        <div class="rm-duration">4 месяца</div>
+        <ul class="roadmap-tasks">
+          <li>Архитектура БД и API</li>
+          <li>Shared Core (заказы, кошельки)</li>
+          <li>WMS (приёмка, консолидация)</li>
+          <li>GPS Tracking Service</li>
+          <li>Admin Panel</li>
+        </ul>
+      </div>
+      <div class="roadmap-card fade-up" style="border-color:rgba(46,204,113,0.3);">
+        <div class="rm-phase">Этап 3–4</div>
+        <h3>Клиент + Запуск</h3>
+        <div class="rm-duration">3 месяца</div>
+        <ul class="roadmap-tasks">
+          <li>Клиентское приложение (React Native)</li>
+          <li>Courier App</li>
+          <li>Altyn Asyr онлайн-платежи</li>
+          <li>QA + Нагрузочное тестирование</li>
+          <li>Пилот: 10–20 реальных заказов</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="container">
+    <div class="section-label">Команда</div>
+    <h2 class="section-title">Команда разработки</h2>
+    <p class="section-sub">Бюджет команды на весь проект: <strong style="color:var(--gold)">358 000 TMT</strong>. Полный цикл от архитектуры до запуска.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div>
+          <div class="team-role">Backend-разработчик</div>
+          <div class="team-salary">Python / FastAPI / PostgreSQL · 7 мес</div>
+        </div>
+        <div>
+          <div class="team-count">×2</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;">8 000 тмт/мес</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div>
+          <div class="team-role">Frontend-разработчик</div>
+          <div class="team-salary">React (Web + Admin) · 7 мес</div>
+        </div>
+        <div>
+          <div class="team-count">×2</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;">8 000 тмт/мес</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div>
+          <div class="team-role">Mobile-разработчик</div>
+          <div class="team-salary">React Native · 2 мес</div>
+        </div>
+        <div>
+          <div class="team-count">×2</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;">8 000 тмт/мес</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div>
+          <div class="team-role">Проект-менеджер / BA</div>
+          <div class="team-salary">Управление + аналитика · 7 мес</div>
+        </div>
+        <div>
+          <div class="team-count">×1</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;">10 000 тмт/мес</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div>
+          <div class="team-role">DevOps / Sysadmin</div>
+          <div class="team-salary">Инфраструктура · 2 мес</div>
+        </div>
+        <div>
+          <div class="team-count">×1</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;">10 000 тмт/мес</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div>
+          <div class="team-role">UX/UI Дизайнер</div>
+          <div class="team-salary">Дизайн всех приложений · 1 мес</div>
+        </div>
+        <div>
+          <div class="team-count">×1</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;">7 000 тмт/мес</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div>
+          <div class="team-role">QA-инженер</div>
+          <div class="team-salary">Функциональное тестирование · 1 мес</div>
+        </div>
+        <div>
+          <div class="team-count">×1</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;">5 000 тмт/мес</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="hero-badge" style="justify-content:center;display:inline-flex;margin-bottom:1rem;">
+    <span>🚀</span> Запуск — 2026 год
+  </div>
+  <h2>Начните заказывать<br/>из Китая уже сегодня</h2>
+  <p>Скачайте приложение China-TM Cargo и получите доступ к миллионам товаров с Taobao, 1688 и Dewu.</p>
+  <div class="app-badges">
+    <a href="#" class="app-badge">
+      <span class="ab-icon">📱</span>
+      <div class="ab-text">
+        <div class="ab-sub">Скачать в</div>
+        <div class="ab-name">App Store</div>
+      </div>
+    </a>
+    <a href="#" class="app-badge">
+      <span class="ab-icon">🤖</span>
+      <div class="ab-text">
+        <div class="ab-sub">Скачать в</div>
+        <div class="ab-name">Google Play</div>
+      </div>
+    </a>
+    <a href="#tracking" class="btn-primary" style="margin-left:0.5rem;">
+      Отследить заказ →
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="fb-logo">🇨🇳 China-TM Cargo 🇹🇲</div>
+      <p>Логистическая экосистема для доставки товаров из Китая в Туркменистан.</p>
+      <p style="margin-top:0.5rem;font-size:0.72rem;">Гуанчжоу (КНР) · Ашхабад (Туркменистан)</p>
+    </div>
+    <div class="footer-col">
+      <h4>Услуги</h4>
+      <ul>
+        <li>Выкуп с Taobao</li>
+        <li>Выкуп с 1688</li>
+        <li>Выкуп с Dewu/Poizon</li>
+        <li>Авиа-экспресс</li>
+        <li>Страхование</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Платформа</h4>
+      <ul>
+        <li>Мобильное приложение</li>
+        <li>Трекинг заказов</li>
+        <li>Складское ПО (WMS)</li>
+        <li>Admin Panel</li>
+        <li>Courier App</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Компания</h4>
+      <ul>
+        <li>О нас</li>
+        <li>Маршруты</li>
+        <li>Тарифы</li>
+        <li>Roadmap</li>
+        <li>Контакты</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 China-TM Cargo · Логистическая экосистема Китай → Туркменистан</span>
+    <span>v1.0 · Черновик</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll fade-up
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // Smooth scroll helper
+  function scrollToSection(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Tracking demo
+  function runTrackDemo() {
+    const input = document.getElementById('trackInput').value.trim();
+    const tl = document.getElementById('trackTimeline');
+    const items = tl.querySelectorAll('.track-item');
+    // Reset
+    items.forEach(el => { el.classList.remove('done', 'active'); });
+    // Animate
+    let i = 0;
+    function step() {
+      if (i < items.length) {
+        if (i < 4) { items[i].classList.add('done'); }
+        else if (i === 4) { items[i].classList.add('active'); }
+        i++;
+        setTimeout(step, 300);
+      }
+    }
+    step();
+  }
+
+  // Auto-run demo on load
+  setTimeout(runTrackDemo, 800);
+</script>
+</body>
+</html>

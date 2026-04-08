@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pandoc \"C:\\\\Users\\\\Windows 11 Pro\\\\Downloads\\\\China_TM_Cargo_TZ_v1.docx\" -o /tmp/tz_output.md)",
+      "Read(//tmp/**)",
+      "Bash(python \"C:\\\\Users\\\\Windows 11 Pro\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\eac1ec78-266d-4569-90a7-f531f328fc83\\\\1850bb7a-aa56-4b05-aa4f-7ea4d2a8a271\\\\skills\\\\docx\\\\scripts\\\\office\\\\unpack.py\" \"C:\\\\Users\\\\Windows 11 Pro\\\\Downloads\\\\China_TM_Cargo_TZ_v1.docx\" /tmp/tz_unpacked/)",
+      "Bash(python -c \":*)",
+      "Bash(python -c ':*)"
+    ]
+  }
+}
